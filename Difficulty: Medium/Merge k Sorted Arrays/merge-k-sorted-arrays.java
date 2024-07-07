@@ -30,29 +30,60 @@ class GFG{
 
 
 //User function Template for Java
-
+class Triplet implements Comparable<Triplet>{
+    int val , num , ind;
+    
+    Triplet(int val , int num , int ind)
+    {
+        this.val = val;
+        this.num = num;
+        this.ind = ind;
+    }
+    
+    public int compareTo(Triplet t)
+    {
+        if(val <= t.val)
+        return -1;
+        else
+        return 1;
+    }
+}
 
 class Solution
 {
     //Function to merge k sorted arrays.
     public static ArrayList<Integer> mergeKArrays(int[][] arr,int K) 
     {
-        PriorityQueue<Integer> q = new PriorityQueue<Integer>();
-        ArrayList<Integer> l = new ArrayList<Integer>();
         
-        for(int i =0;i<arr.length;i++)
+        ArrayList<Integer> p = new ArrayList<Integer>();
+
+       PriorityQueue<Triplet> q = new PriorityQueue<Triplet>();
+        
+        for(int i =0;i<K;i++)
         {
-            for(int j = 0;j<arr.length;j++)
+           // System.out.println(arr[i][i]);
+            q.add(new Triplet(arr[i][0] , i , 0));
+        }
+        // System.out.println("here");
+        
+        while(!q.isEmpty())
+        {
+            
+           // System.out.println(q.peek().val + " "+q.peek().num+" "+q.peek().ind);
+            Triplet m = q.poll();
+            p.add(m.val);
+            int num = m.num;
+            int ind = m.ind;
+            ind+=1;
+            
+            if(ind < K)
             {
-                q.add(arr[i][j]);
+              //  System.out.println(arr[num][ind]);
+                q.add(new Triplet(arr[num][ind] , num , ind));
             }
         }
         
-        
-        while(!q.isEmpty())
-        l.add(q.poll());
-        
-        return l;
+        return p;
         
         
     }
