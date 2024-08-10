@@ -9,19 +9,31 @@ class GFG {
         Scanner sc = new Scanner(System.in);
         int t;
         t = sc.nextInt();
+        sc.nextLine(); // Consume the newline character
+
         while (t-- > 0) {
+            String line = sc.nextLine();
+            String[] tokens = line.split(" ");
 
-            int N;
-            N = sc.nextInt();
+            // Create an ArrayList to store the integers
+            ArrayList<Integer> array = new ArrayList<>();
 
-            int[] fruits = new int[N];
-            for (int i = 0; i < N; i++) fruits[i] = sc.nextInt();
+            // Parse the tokens into integers and add to the array
+            for (String token : tokens) {
+                array.add(Integer.parseInt(token));
+            }
 
-            Solution obj = new Solution();
-            int res = obj.totalFruits(N, fruits);
+            // Convert ArrayList to array
+            Integer[] arr = new Integer[array.size()];
+            array.toArray(arr);
 
-            System.out.println(res);
+            Solution ob = new Solution();
+
+            // Call totalFruits method and print result
+            Integer ans = ob.totalFruits(arr);
+            System.out.println(ans);
         }
+        sc.close();
     }
 }
 // } Driver Code Ends
@@ -30,42 +42,41 @@ class GFG {
 // User function Template for Java
 
 class Solution {
-    public static int totalFruits(int n, int[] arr) {
+    public static int totalFruits(Integer[] arr) {
         
-        int max = 0;
-        int l =0;
-       
-        int i=0 ;
-        
-        
+        int l = 0;
+        int max = Integer.MIN_VALUE;
         Map<Integer,Integer> m = new HashMap<>();
+        int r = 0;
         
-       while(i<n)
-       {
-           if(!m.containsKey(arr[i]))
+        while(r<arr.length)
+        {
+             if(!m.containsKey(arr[r]))
            {
-               m.put(arr[i] , 1);
+               m.put(arr[r] , 1);
            }
-           else if(m.containsKey(arr[i]))
+           else if(m.containsKey(arr[r]))
            {
-               m.put(arr[i] , m.get(arr[i])+1);
+               m.put(arr[r] , m.get(arr[r])+1);
            }
-           
-           if(m.size() > 2)
-           {
-               while(m.size() >2)
-               {
+            
+            if(m.size() > 2)
+            {
+                while(m.size() > 2)
+                {
                   m.put(arr[l] , m.get(arr[l])-1);
                   if(m.get(arr[l]) == 0)
                   m.remove(arr[l]);
                   l++;
-               }
-           }
-           max = Math.max(max , i-l+1);
-           i++;
-       }
-        
-        return max;
+                }
+            }
+            max = Math.max(max , r-l+1);
+            r++;
+            
+            
+            
+        }
+       return max;
         
     }
 }
