@@ -12,21 +12,26 @@ import java.math.BigInteger;
 
 class Solution{
     
-    //Function to return sum of count of set bits in the integers from 1 to n.
-    public static int countSetBits(int n){
-    
-        int sum=0;
-        int i=2;
-        n = n+1;
-        while((i/2)<n){
-            sum += (n/i) * (i/2) + Math.max((n%i)-(i/2),0);
-            i *= 2;
-        }
-        return sum;
-
+    public static int findmax(int t)
+    {
+        int ct = 0;
+        
+        while(t >= (1 << (ct+1)))
+        ct++;
+        
+        return ct;
+    }
+    public static int countSetBits(int t){
+        
+        if(t == 0)
+        return 0;
+        int getp = findmax(t);
+        int ct = getp * (1 << (getp-1));
+        int z = t- (1 << getp);
+        return ct+z+1+countSetBits(z);
+        
     }
 }
-
 
 //{ Driver Code Starts.
 
