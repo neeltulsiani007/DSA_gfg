@@ -31,29 +31,24 @@ class GfG
 {
     int maxLen(int arr[], int n)
     {
-        int ma = 0;
-        int s = 0;
-        int ms = 0;
+        Map<Integer,Integer> m = new HashMap<>();
+        int pre = 0;
+        int ans = 0;
         
-        Map<Integer , Integer> m = new HashMap<>();
-        
-        for(int i = 0;i<n;i++)
+        for(int i =0;i<n;i++)
         {
+            pre+=arr[i];
+            if(pre == 0)
+            ans = i+1;
             
-            s+=arr[i];
-            if(s == 0)
+            if(m.containsKey(pre))
             {
-                ma = i+1;
-            }
-            
-          //  System.out.println(s);
-            if(m.containsKey(s))
-            {
-                   ma = Math.max(ma ,i-m.get(s));
+                ans = Math.max(ans , i-m.get(pre));
             }
             else
-            m.put(s,i);
+            m.put(pre , i);
+            
         }
-        return ma;
+        return ans;
     }
 }
